@@ -51,6 +51,12 @@
 				<!-- Home content -->
 				<%@include file="contact.jsp"%>
 			</c:if>
+			
+				<c:if test="${userClickAllProducts==true or userClickCatagoryProducts==true }">
+				<!-- Home content -->
+				<%@include file="listProducts.jsp"%>
+			</c:if>
+			
 		</div>
 
 
@@ -60,7 +66,7 @@
 
 		<!-- Bootstrap core JavaScript -->
 		<script src="${js}/jquery.js"></script>
-		<script src="${js}/bootstrap.min.js"></script>
+		<script src="${js}/bootstrap.bundle.min.js"></script>
 		<script src="${js}/myapp.js"></script>
 	</div>
 </body>

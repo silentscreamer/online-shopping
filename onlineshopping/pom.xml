@@ -36,6 +36,13 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Adding backend project dependency -->
+		<dependency>
+		<groupId>com.saquib</groupId>
+	<artifactId>backendofshop</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 
