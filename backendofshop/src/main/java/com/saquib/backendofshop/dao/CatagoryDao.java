@@ -2,12 +2,18 @@ package com.saquib.backendofshop.dao;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.saquib.backendofshop.dto.Catagory;
 
 public interface CatagoryDao {
 
-	List<Catagory> list();
 	Catagory get(int id);
+
+	List<Catagory> list();
+
+	Boolean addCatagory(Catagory c);
+	
+	Boolean updateCatagory(Catagory c);
+	
+	Boolean deleteCatagory(Catagory c);
+	
 }
