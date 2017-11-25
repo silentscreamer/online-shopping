@@ -14,6 +14,7 @@ public class Catagory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name = "nameofCatagory")
 	private String name;
 	private String description;
 	@Column(name = "image_url")
@@ -66,6 +67,5 @@ public class Catagory {
 		return "Catagory [id=" + id + ", name=" + name + ", description=" + description + ", imageUrl=" + imageUrl
 				+ ", isActive=" + isActive + "]";
 	}
-	
 
 }

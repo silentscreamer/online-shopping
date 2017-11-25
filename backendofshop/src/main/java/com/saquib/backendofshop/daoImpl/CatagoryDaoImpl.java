@@ -14,20 +14,18 @@ import com.saquib.backendofshop.dao.CatagoryDao;
 import com.saquib.backendofshop.dto.Catagory;
 
 @Repository("catagoryDao")
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 public class CatagoryDaoImpl implements CatagoryDao {
-	
+
 	@Autowired
 	SessionFactory sf;
-	private static List<Catagory> catagoryList= new ArrayList<Catagory>();
-	
-	
+	private static List<Catagory> catagoryList = new ArrayList<Catagory>();
 
 	@Override
 	public List<Catagory> list() {
-		Query q =   sf.getCurrentSession().createQuery("FROM Catagory where isActive = :active");
+		Query q = sf.getCurrentSession().createQuery("FROM Catagory where isActive = :active",Catagory.class);
 		q.setParameter("active", true);
-		List<Catagory> l= q.getResultList();
+		List<Catagory> l = q.getResultList();
 		return l;
 	}
 
@@ -39,10 +37,10 @@ public class CatagoryDaoImpl implements CatagoryDao {
 	@Override
 
 	public Boolean addCatagory(Catagory c) {
-		try{
+		try {
 			sf.getCurrentSession().persist(c);
 			return true;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
@@ -50,10 +48,10 @@ public class CatagoryDaoImpl implements CatagoryDao {
 
 	@Override
 	public Boolean updateCatagory(Catagory c) {
-		try{
+		try {
 			sf.getCurrentSession().update(c);
 			return true;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
@@ -62,11 +60,11 @@ public class CatagoryDaoImpl implements CatagoryDao {
 	@Override
 	public Boolean deleteCatagory(Catagory c) {
 		c.setActive(false);
-	
-		try{
+
+		try {
 			sf.getCurrentSession().update(c);
 			return true;
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}

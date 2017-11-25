@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.saquib.backendofshop.dao.CatagoryDao;
+import com.saquib.backendofshop.dao.ProductDao;
 import com.saquib.backendofshop.dto.Catagory;
+import com.saquib.backendofshop.dto.Product;
 
 @Controller
 public class PageController {
 	
 	@Autowired
 	private CatagoryDao catagoryDao;
-
+   
+	@Autowired
+	private ProductDao productDao;
 	@RequestMapping(value = { "/", "/home", "/index" })
 	public ModelAndView index() {
 		ModelAndView mv = new ModelAndView("page");
@@ -60,5 +64,28 @@ public class PageController {
 		mv.addObject("userClickCatagoryProducts", true);
 		return mv;
 	}
+	
+	@RequestMapping(value="/show/{id}/product")
+	public ModelAndView showsingleprod(@PathVariable("id") int id)
+	{
+		ModelAndView mv = new ModelAndView("page");
+		Product prod = productDao.get(id);
+		prod.setViews(prod.getViews()+1);
+		productDao.updateProduct(prod);
+		
+		mv.addObject("title", prod.getName());
+		mv.addObject("product", prod);
+		mv.addObject("userclickoneprod", true);
+		return mv;
+	}
+	@RequestMapping(value="/cart/add/{id}/product")
+	public ModelAndView addtocart(@PathVariable("id") int id){
+		ModelAndView mv = new ModelAndView("page");
+		Product prod = productDao.get(id);
+		mv.addObject("title", prod.getName());
+		mv.addObject("userclickedaddtocrt", true);
+		return mv;
+	}
+	
 	
 }
