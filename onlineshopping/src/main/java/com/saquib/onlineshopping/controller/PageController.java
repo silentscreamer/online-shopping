@@ -1,5 +1,7 @@
 package com.saquib.onlineshopping.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,9 +12,12 @@ import com.saquib.backendofshop.dao.CatagoryDao;
 import com.saquib.backendofshop.dao.ProductDao;
 import com.saquib.backendofshop.dto.Catagory;
 import com.saquib.backendofshop.dto.Product;
+import com.saquib.onlineshopping.exception.ProductNotFoundException;
 
 @Controller
 public class PageController {
+	
+	private static final Logger log = LoggerFactory.getLogger(PageController.class);
 	
 	@Autowired
 	private CatagoryDao catagoryDao;
@@ -25,6 +30,8 @@ public class PageController {
 		mv.addObject("title", "Home");
 		mv.addObject("catagories",catagoryDao.list());
 		mv.addObject("userClickHome", true);
+		log.info("Indide page controller index method-INFO");
+		log.debug("Indide page controller index method-Debug");
 		return mv;
 	}
 
@@ -53,10 +60,13 @@ public class PageController {
 		return mv;
 	}
 	@RequestMapping(value = "/show/catagory/{id}/products")
-	public ModelAndView showallcatagoryprod(@PathVariable("id") int id) {
+	public ModelAndView showallcatagoryprod(@PathVariable("id") int id) throws ProductNotFoundException {
 		
 		Catagory catagory=null;
 		catagory= catagoryDao.get(id);
+		if(catagory==null){
+			throw new ProductNotFoundException();
+		}
 		ModelAndView mv = new ModelAndView("page");
 		mv.addObject("title", catagory.getName());
 		mv.addObject("catagories",catagoryDao.list());
@@ -66,10 +76,14 @@ public class PageController {
 	}
 	
 	@RequestMapping(value="/show/{id}/product")
-	public ModelAndView showsingleprod(@PathVariable("id") int id)
+	public ModelAndView showsingleprod(@PathVariable("id") int id) throws ProductNotFoundException
 	{
 		ModelAndView mv = new ModelAndView("page");
 		Product prod = productDao.get(id);
+		if(prod== null){
+			throw new ProductNotFoundException();
+		}
+		
 		prod.setViews(prod.getViews()+1);
 		productDao.updateProduct(prod);
 		
