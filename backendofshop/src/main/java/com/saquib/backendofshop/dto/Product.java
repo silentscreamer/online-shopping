@@ -7,6 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Product {
@@ -16,11 +22,15 @@ public class Product {
 	@Column(name = "codenum")
 	private String code;
 	@Column(name = "nameofproduct")
+	@NotBlank(message="Name can not be blank!")
 	private String name;
+	@NotBlank(message="Brand Name can not be blank!")
 	private String brand;
+	@NotBlank(message="Description can not be blank!")
 	private String description;
 	@Column(name = "unit_price")
 	private double unitPrice;
+	@Min(value=1,message="Quantity can not be less than one!")
 	private int quantity;
 	@Column(name = "is_active")
 	private boolean active;
@@ -30,6 +40,17 @@ public class Product {
 	private int supplierId;
 	private int purchases;
 	private int views;
+    @Transient
+	private MultipartFile file;
+	
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	public Product() {
 		this.code = "PRD" + UUID.randomUUID().toString().substring(26).toUpperCase();
@@ -131,4 +152,13 @@ public class Product {
 		this.views = views;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", code=" + code + ", name=" + name + ", brand=" + brand + ", description="
+				+ description + ", unitPrice=" + unitPrice + ", quantity=" + quantity + ", active=" + active
+				+ ", catagoryId=" + catagoryId + ", supplierId=" + supplierId + ", purchases=" + purchases + ", views="
+				+ views + "]";
+	}
+
+	
 }

@@ -90,6 +90,11 @@
 				<!-- Home content -->
 				<%@include file="cart.jsp"%>
 			</c:if>
+			
+			<c:if test="${userClicksManageProd}">
+				<!-- Home content -->
+				<%@include file="Manage.jsp"%>
+			</c:if>
 		</div>
 
 
